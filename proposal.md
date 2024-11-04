@@ -4,19 +4,19 @@
 https://github.com/OnlyJuanCena/Juan_Garza-ANGM2305-Final_Project.git
 
 ## Description
-1-2 sentence description of what it will do and how it relevant to media and digital arts.
+For this assignment, I plan on using the PyGame Library to recreate a key historical creation of the video game industry: Pong.
 
 ## Features
 - Feature 1
-	- Short explaination of how it will be executed.
+	- Recreate the bong
 - Feature 2
 	- Short explaination of how it will be executed.
-- Feature N 
+- Feature 3 
 	- Short explaination of how it will be executed.
 
 ## Challenges
-- Short sentence of any skill or topic that needs to be learnt or researched.
-- Short sentence of any skill or topic that needs to be learnt or researched.
+- Creating colision boxes that feel fair.
+- Making multiple objects interact with each other.
 - Short sentence of any skill or topic that needs to be learnt or researched.
 
 ## Outcomes
