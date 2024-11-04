@@ -17,26 +17,27 @@ For this assignment, I plan on using the PyGame Library to recreate a key histor
 ## Challenges
 - Creating colision boxes that feel fair.
 - Making multiple objects interact with each other.
-- Making a ball with consistent mock physics.
+- Add sound effects to enhance the game feel.
 
 ## Outcomes
 Ideal Outcome:
 - Briefly describe what is the ideal outcome?
-The ideal outcome is for the game to start with a small delay and continue until the the player looses.
+The ideal outcome is for the game to start with a small delay and continue until the the player loses. I wanna try to add a simple background with a numerical on-screen score and to have acceleration with the player controller. Additionally I'd like the game to work in fullscreen and/or windowed mode.
 
 Minimal Viable Outcome:
 - Briefly describe the bare essential for a good working outcome?
+At the bare minimum, I want the game to open, the ball to bouce back and forth, and for the scoring system to work.
 
 ## Milestones
 
 - Week 1
-  1. Goal 1
-  2. Goal 2
+  1. Create Player Controller
+  2. Create game area
 
 - Week 2
-  1. Goal 1
-  2. Goal 2
+  1. Create Ball Physics
+  2. Create Computer opponent.
 
-- Week N (Final)
-  1. Goal 1
-  2. Goal 2
+- Week 3-4 (Final)
+  1. Refine Game Feel
+  2. Add flair/sound effects
