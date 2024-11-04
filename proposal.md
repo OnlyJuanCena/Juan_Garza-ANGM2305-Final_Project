@@ -17,7 +17,7 @@ For this assignment, I plan on using the PyGame Library to recreate a key histor
 ## Challenges
 - Creating colision boxes that feel fair.
 - Making multiple objects interact with each other.
-- Add sound effects to enhance the game feel.
+- Adding sound effects to enhance the game feel.
 
 ## Outcomes
 Ideal Outcome:
@@ -36,7 +36,7 @@ At the bare minimum, I want the game to open, the ball to bouce back and forth, 
 
 - Week 2
   1. Create Ball Physics
-  2. Create Computer opponent.
+  2. Create Opponent AI
 
 - Week 3-4 (Final)
   1. Refine Game Feel
