@@ -1,4 +1,4 @@
-# Title
+# PyBall: Retro Edition
 
 ## Repository
 https://github.com/OnlyJuanCena/Juan_Garza-ANGM2305-Final_Project.git
