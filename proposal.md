@@ -8,20 +8,21 @@ For this assignment, I plan on using the PyGame Library to recreate a key histor
 
 ## Features
 - Feature 1
-	- Recreate the bong
+	- Recreate the iconic gameplay of pong and allow for one player fighting against a basic computer opponent.
 - Feature 2
-	- Short explaination of how it will be executed.
+	- Keep track of player score.
 - Feature 3 
-	- Short explaination of how it will be executed.
+	- Increase game difficulty as time goes on.
 
 ## Challenges
 - Creating colision boxes that feel fair.
 - Making multiple objects interact with each other.
-- Short sentence of any skill or topic that needs to be learnt or researched.
+- Making a ball with consistent mock physics.
 
 ## Outcomes
 Ideal Outcome:
 - Briefly describe what is the ideal outcome?
+The ideal outcome is for the game to start with a small delay and continue until the the player looses.
 
 Minimal Viable Outcome:
 - Briefly describe the bare essential for a good working outcome?
