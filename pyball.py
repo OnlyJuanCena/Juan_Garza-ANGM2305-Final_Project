@@ -25,6 +25,8 @@ class Player_Block:
     def move(self, dir):
         self.pos = self.pos + dir * self.speed
 
+        self.block_controller = pygame.Rect(self.pos[0], self.pos[1], self.width, self.height)
+
     def draw(self):
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
         
@@ -56,8 +58,6 @@ def main():
             player.move(pygame.Vector2(-1.5, 0))
         if keys[pygame.K_RIGHT]:
             player.move(pygame.Vector2(1.5, 0))
-        
-        print(player.pos)
 
         screen.fill(BLACK)
         player.draw()
