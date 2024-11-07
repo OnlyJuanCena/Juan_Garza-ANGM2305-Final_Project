@@ -13,6 +13,8 @@ For this assignment, I plan on using the PyGame Library to recreate a key histor
 	- Keep track of player score.
 - Feature 3 
 	- Increase game difficulty as time goes on.
+- Feature 4
+  - The ability to change the blocks' colors.
 
 ## Challenges
 - Creating colision boxes that feel fair.
