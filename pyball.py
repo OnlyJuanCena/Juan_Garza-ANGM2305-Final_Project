@@ -29,6 +29,9 @@ class Player_Block:
 
     def draw(self):
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
+
+    def playerY(self):
+        return self.pos.y
         
 
 def main():
@@ -50,9 +53,9 @@ def main():
                 pygame.quit()
                 sys.exit()
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] and player.playerY() > 2:
             player.move(pygame.Vector2(0, -1.5))
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_DOWN] and player.playerY() < HEIGHT-player.height-2:
             player.move(pygame.Vector2(0, 1.5))
 
         screen.fill(BLACK)
