@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT))
 BLACK = (0,0,0)
 
 
-class Player_Block:
+class Block:
 
     def __init__(self, pos=(0,0)):
         self.pos = pygame.Vector2(pos)
@@ -29,7 +29,29 @@ class Player_Block:
 
     def draw(self):
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
+
+class Ball:
+    
+    def __init__(self, pos=(0,0), speed=5.0):
+        self.pos = pygame.Vector2(pos)
+        self.size = 15
+        self.color = (255,255,255)
+        self.speed = speed
+
+        # Rect Properties
+        self.block_controller = pygame.Rect(pos[0], pos[1], self.size, self.size)
+        # Display Rect
+        self.block = pygame.draw.rect(screen, self.color, self.block_controller)
+
+    def move(self, dir):
+        self.pos = self.pos + dir * self.speed
+
+        self.block_controller = pygame.Rect(self.pos[0], self.pos[1], self.width, self.height)
+
+    def draw(self):
+        self.block = pygame.draw.rect(screen, self.color, self.block_controller)
         
+
 
 def main():
     # Initialize Pygame
@@ -40,8 +62,14 @@ def main():
     # Window Title
     pygame.display.set_caption("PyBall: Retro Edition")
 
-    #Create Player
-    player = Player_Block(pos=(WIDTH//16,HEIGHT//2))
+    # Create Player
+    player = Block(pos=(WIDTH//16,HEIGHT//2))
+
+    # Create AI
+    comp = Block(pos=(WIDTH - WIDTH//16 - player.width, HEIGHT//2))
+
+    # Create Ball
+    ball = Ball(pos=(WIDTH//2, HEIGHT//2))
 
     # Game loop to keep the window open
     while True:
@@ -57,6 +85,8 @@ def main():
 
         screen.fill(BLACK)
         player.draw()
+        comp.draw()
+        ball.draw()
         # Update display
         pygame.display.flip()
         dt = clock.tick(30)
