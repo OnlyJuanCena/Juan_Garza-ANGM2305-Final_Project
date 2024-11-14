@@ -1,8 +1,9 @@
 import pygame
 import sys
+import time
 
-WIDTH = 640
-HEIGHT = 480
+WIDTH = 640 * 1.5
+HEIGHT = 480 * 1.5
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
 BLACK = (0,0,0)
@@ -17,7 +18,7 @@ class Block:
         self.color = (255,255,255)
         self.speed = 3.0
 
-        # Rect Properties
+        # Rect Controller
         self.block_controller = pygame.Rect(pos[0], pos[1], self.width, self.height)
         # Display Rect
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
@@ -37,19 +38,26 @@ class Ball:
         self.size = 15
         self.color = (255,255,255)
         self.speed = speed
+        self.x_dir = 1
+        self.y_dir = -1
 
-        # Rect Properties
+        # Ball Controller
         self.block_controller = pygame.Rect(pos[0], pos[1], self.size, self.size)
-        # Display Rect
+        # Display Ball
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
 
-    def move(self, dir):
-        self.pos = self.pos + dir * self.speed
+    def move(self):
+        self.pos[0] += self.speed * self.x_dir
+        self.pos[1] += self.speed * self.y_dir
 
-        self.block_controller = pygame.Rect(self.pos[0], self.pos[1], self.width, self.height)
+        self.block_controller = pygame.Rect(self.pos[0], self.pos[1], self.size, self.size)
 
     def draw(self):
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
+
+    def reset(self):
+        self.pos[0] = WIDTH//2
+        self.pos[1] = HEIGHT//2
         
 
 
@@ -71,6 +79,13 @@ def main():
     # Create Ball
     ball = Ball(pos=(WIDTH//2, HEIGHT//2))
 
+    def Default_Positions():
+        ball.reset()
+        player.pos = (WIDTH//16,HEIGHT//2)
+        comp.pos = (WIDTH - WIDTH//16 - player.width, HEIGHT//2)
+        player.draw()
+        comp.draw()
+
     # Game loop to keep the window open
     while True:
         for event in pygame.event.get():
@@ -82,6 +97,19 @@ def main():
             player.move(pygame.Vector2(0, -1.5))
         if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
             player.move(pygame.Vector2(0, 1.5))
+
+        if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - 15:
+            ball.y_dir *= -1
+            
+        if ball.pos[0] >= WIDTH:
+            time.sleep(1)
+            Default_Positions()
+            print("Bazzinga")
+# TODO: Make it reset when it reaches the left side.
+        # elif ball.pos[0] <= WIDTH:
+        #     Default_Positions()
+        ball.move()
+            
 
         screen.fill(BLACK)
         player.draw()
