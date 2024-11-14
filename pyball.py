@@ -2,8 +2,8 @@ import pygame
 import sys
 import time
 
-WIDTH = 640 * 1.5
-HEIGHT = 480 * 1.5
+WIDTH = 640
+HEIGHT = 480
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
 BLACK = (0,0,0)
@@ -65,6 +65,7 @@ def main():
     # Initialize Pygame
     pygame.init()
     clock = pygame.time.Clock()
+    speed_multiplier = 3
     dt = 0
 
     # Window Title
@@ -94,20 +95,18 @@ def main():
                 sys.exit()
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP] and player.pos[1] > 2:
-            player.move(pygame.Vector2(0, -1.5))
+            player.move(pygame.Vector2(0, -1.5*speed_multiplier))
         if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
-            player.move(pygame.Vector2(0, 1.5))
+            player.move(pygame.Vector2(0, 1.5*speed_multiplier))
 
-        if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - 15:
+        if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
             ball.y_dir *= -1
             
         if ball.pos[0] >= WIDTH:
             time.sleep(1)
             Default_Positions()
-            print("Bazzinga")
-# TODO: Make it reset when it reaches the left side.
-        # elif ball.pos[0] <= WIDTH:
-        #     Default_Positions()
+        elif ball.pos[0] <= 0 - ball.size:
+            Default_Positions()
         ball.move()
             
 
