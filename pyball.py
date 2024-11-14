@@ -38,7 +38,7 @@ class Ball:
         self.size = 15
         self.color = (255,255,255)
         self.speed = speed
-        self.x_dir = 1
+        self.x_dir = -1
         self.y_dir = -1
 
         # Ball Controller
@@ -84,8 +84,7 @@ def main():
         ball.reset()
         player.pos = (WIDTH//16,HEIGHT//2)
         comp.pos = (WIDTH - WIDTH//16 - player.width, HEIGHT//2)
-        player.draw()
-        comp.draw()
+
 
     # Game loop to keep the window open
     while True:
@@ -93,6 +92,9 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+        screen.fill(BLACK)
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP] and player.pos[1] > 2:
             player.move(pygame.Vector2(0, -1.5*speed_multiplier))
@@ -109,8 +111,6 @@ def main():
             Default_Positions()
         ball.move()
             
-
-        screen.fill(BLACK)
         player.draw()
         comp.draw()
         ball.draw()
