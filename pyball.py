@@ -38,7 +38,7 @@ class Ball:
         self.size = 15
         self.color = (255,255,255)
         self.speed = speed
-        self.x_dir = -1
+        self.x_dir = 1
         self.y_dir = -1
 
         # Ball Controller
@@ -95,15 +95,16 @@ def main():
 
         screen.fill(BLACK)
 
+        # Keybinds
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP] and player.pos[1] > 2:
             player.move(pygame.Vector2(0, -1.5*speed_multiplier))
         if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
             player.move(pygame.Vector2(0, 1.5*speed_multiplier))
 
+        # Edge detection
         if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
             ball.y_dir *= -1
-            
         if ball.pos[0] >= WIDTH:
             time.sleep(1)
             Default_Positions()
