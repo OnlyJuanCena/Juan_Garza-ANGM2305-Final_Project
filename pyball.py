@@ -38,7 +38,7 @@ class Ball:
         self.size = 15
         self.color = (255,255,255)
         self.speed = speed
-        self.x_dir = 1
+        self.x_dir = -1
         self.y_dir = -1
 
         # Ball Controller
@@ -102,6 +102,20 @@ def main():
         if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
             player.move(pygame.Vector2(0, 1.5*speed_multiplier))
 
+        # Block-hit detection
+        if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
+            ball.x_dir *= -1
+            print("Bazzinga")
+        if pygame.Rect.colliderect(comp.block_controller, ball.block_controller):
+            ball.x_dir *= -1
+            print("Bazzinga")
+
+
+        if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-player.height-2):
+            comp.move(pygame.Vector2(0, 1.5*speed_multiplier//2))
+        if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
+            comp.move(pygame.Vector2(0, -1.5*speed_multiplier//2))
+
         # Edge detection
         if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
             ball.y_dir *= -1
@@ -109,6 +123,7 @@ def main():
             time.sleep(1)
             Default_Positions()
         elif ball.pos[0] <= 0 - ball.size:
+            time.sleep(1)
             Default_Positions()
         ball.move()
             
