@@ -64,7 +64,10 @@ def main():
     # Initialize Pygame
     pygame.init()
     clock = pygame.time.Clock()
+    player_score = 0
+    comp_score = 0
     speed_multiplier = 3
+    hit_sound = pygame.mixer.Sound("sfx/pong_hit.wav")
     dt = 0
 
     # Window Title
@@ -83,7 +86,6 @@ def main():
         ball.reset()
         player.pos = (WIDTH//16,HEIGHT//2)
         comp.pos = (WIDTH - WIDTH//16 - player.width, HEIGHT//2)
-        speed_multiplier = 3
 
 
     # Game loop to keep the window open
@@ -106,30 +108,39 @@ def main():
         if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
             ball.x_dir *= -1
             print("Bazzinga")
+            hit_sound.play()
         if pygame.Rect.colliderect(comp.block_controller, ball.block_controller):
             ball.x_dir *= -1
             print("Bazzinga")
+            hit_sound.play()
 
-        # Ball movement
+        # Edge-hit detection
         if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
             ball.y_dir *= -1
+
         if ball.pos[0] >= WIDTH:
             time.sleep(1)
             Default_Positions()
+            speed_multiplier = 3
+            player_score += 1
+            print(f"Player score: {player_score}")
         elif ball.pos[0] <= 0 - ball.size:
             time.sleep(1)
             Default_Positions()
+            speed_multiplier = 3
+            comp_score += 1
+            print(f"Comp score: {comp_score}")
         ball.move(speed_multiplier*1.3)
 
         # AI movement
         if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-player.height-2):
             comp.move(pygame.Vector2(0, 1.5))
-            print("moving down")
+            # print("moving down")
         if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
             comp.move(pygame.Vector2(0, -1.5))
-            print("moving up")
+            # print("moving up")
 
-        # Ball Speed
+        # Ball speed ramp
         speed_multiplier *= 1.0005
             
         player.draw()
@@ -137,7 +148,7 @@ def main():
         ball.draw()
         # Update display
         pygame.display.flip()
-        dt = clock.tick(30)
+        dt = clock.tick(60)
 
 if __name__ == "__main__":
     main()
