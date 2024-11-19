@@ -13,7 +13,7 @@ class Block:
 
     def __init__(self, pos=(0,0)):
         self.pos = pygame.Vector2(pos)
-        self.width = 25
+        self.width = 15
         self.height = 100
         self.color = (255,255,255)
         self.speed = 3.0
@@ -68,6 +68,7 @@ def main():
     comp_score = 0
     speed_multiplier = 3
     hit_sound = pygame.mixer.Sound("sfx/pong_hit.wav")
+    point_sound = pygame.mixer.Sound("sfx/pong_point.wav")
     dt = 0
 
     # Window Title
@@ -86,6 +87,7 @@ def main():
         ball.reset()
         player.pos = (WIDTH//16,HEIGHT//2)
         comp.pos = (WIDTH - WIDTH//16 - player.width, HEIGHT//2)
+        point_sound.play()
 
 
     # Game loop to keep the window open
@@ -119,14 +121,14 @@ def main():
             ball.y_dir *= -1
 
         if ball.pos[0] >= WIDTH:
-            time.sleep(1)
             Default_Positions()
+            time.sleep(1)
             speed_multiplier = 3
             player_score += 1
             print(f"Player score: {player_score}")
         elif ball.pos[0] <= 0 - ball.size:
-            time.sleep(1)
             Default_Positions()
+            time.sleep(1)
             speed_multiplier = 3
             comp_score += 1
             print(f"Comp score: {comp_score}")
