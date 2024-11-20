@@ -14,7 +14,7 @@ class Block:
     def __init__(self, pos=(0,0)):
         self.pos = pygame.Vector2(pos)
         self.width = 15
-        self.height = 100
+        self.height = 90
         self.color = (255,255,255)
         self.speed = 3.0
 
@@ -85,8 +85,6 @@ def main():
 
     def Default_Positions():
         ball.reset()
-        player.pos = (WIDTH//16,HEIGHT//2)
-        comp.pos = (WIDTH - WIDTH//16 - player.width, HEIGHT//2)
         point_sound.play()
 
 
