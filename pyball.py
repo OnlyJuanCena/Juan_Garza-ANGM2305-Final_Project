@@ -66,9 +66,14 @@ def main():
     clock = pygame.time.Clock()
     player_score = 0
     comp_score = 0
-    speed_multiplier = 3
+    speed_multiplier = 2
+
+    # Set volume
+    volume = 0.3
     hit_sound = pygame.mixer.Sound("sfx/pong_hit.wav")
     point_sound = pygame.mixer.Sound("sfx/pong_point.wav")
+    pygame.mixer.Sound.set_volume(hit_sound, volume)
+    pygame.mixer.Sound.set_volume(point_sound, volume)
     dt = 0
 
     # Window Title
@@ -104,30 +109,34 @@ def main():
         if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
             player.move(pygame.Vector2(0, 1.5))
 
-        # Block-hit detection
+        # Player Block-hit detection
         if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
             ball.x_dir *= -1
-            print("Bazzinga")
+            if keys[pygame.K_UP]:
+                ball.y_dir = -1
+            elif keys[pygame.K_DOWN]:
+                ball.y_dir = 1
             hit_sound.play()
+
+        # Comp Block-hit detection
         if pygame.Rect.colliderect(comp.block_controller, ball.block_controller):
             ball.x_dir *= -1
-            print("Bazzinga")
             hit_sound.play()
 
         # Edge-hit detection
         if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
             ball.y_dir *= -1
 
-        if ball.pos[0] >= WIDTH:
+        if ball.pos[0] >= WIDTH: # right wall detection
             Default_Positions()
             time.sleep(1)
-            speed_multiplier = 3
+            speed_multiplier = 2
             player_score += 1
             print(f"Player score: {player_score}")
-        elif ball.pos[0] <= 0 - ball.size:
+        elif ball.pos[0] <= 0 - ball.size: # left wall detection
             Default_Positions()
             time.sleep(1)
-            speed_multiplier = 3
+            speed_multiplier = 2
             comp_score += 1
             print(f"Comp score: {comp_score}")
         ball.move(speed_multiplier*1.3)
