@@ -124,6 +124,9 @@ def main():
             comp.move(pygame.Vector2(0, -1.5))
             # print("moving up")
 
+
+        # TODO: Fix ball collision glitch with player and comp
+
         # Player Block-hit detection
         if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
             ball.x_dir *= -1
