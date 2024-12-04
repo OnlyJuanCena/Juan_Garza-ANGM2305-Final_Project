@@ -34,7 +34,8 @@ class Block:
 
     def score(self, score_text, pos):
         score_text = self.font.render(score_text, True, self.color)
-        screen.blit(score_text, pos)
+        screen.blit(score_text, (pos[0]- score_text.get_width()//2, 
+                                pos[1] - score_text.get_height()//2))
 
         
 
@@ -102,75 +103,90 @@ def main():
 
     # Game loop to keep the window open
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        while player_score < 3 and comp_score < 3:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            screen.fill(BLACK)
 
-        screen.fill(BLACK)
+            # Player movement
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_UP] and player.pos[1] > 2:
+                player.move(pygame.Vector2(0, -1.5))
+            if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
+                player.move(pygame.Vector2(0, 1.5))
 
-        # Player movement
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] and player.pos[1] > 2:
-            player.move(pygame.Vector2(0, -1.5))
-        if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
-            player.move(pygame.Vector2(0, 1.5))
-
-        # AI movement
-        if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-comp.height-2):
-            comp.move(pygame.Vector2(0, 1.5))
-            # print("moving down")
-        if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
-            comp.move(pygame.Vector2(0, -1.5))
-            # print("moving up")
-
-
-        # TODO: Fix ball collision glitch with player and comp
-
-        # Player Block-hit detection
-        if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
-            ball.x_dir *= -1
-            if keys[pygame.K_UP]:
-                ball.y_dir = -1
-            elif keys[pygame.K_DOWN]:
-                ball.y_dir = 1
-            hit_sound.play()
-
-        # Comp Block-hit detection
-        if pygame.Rect.colliderect(comp.block_controller, ball.block_controller):
-            ball.x_dir *= -1
-            hit_sound.play()
-
-        # Edge-hit detection
-        if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
-            ball.y_dir *= -1
-
-        if ball.pos[0] >= WIDTH: # right wall detection
-            Default_Positions()
-            time.sleep(1)
-            speed_multiplier = 2
-            player_score += 1
-        elif ball.pos[0] <= 0 - ball.size: # left wall detection
-            Default_Positions()
-            time.sleep(1)
-            speed_multiplier = 2
-            comp_score += 1
-        ball.move(speed_multiplier*1.3)
-
-        # Ball speed ramp
-        speed_multiplier *= 1.0005
-
-        # Update display
-        player.draw()
-        comp.draw()
-        ball.draw()
-
-        player.score(str(player_score), (WIDTH//4, HEIGHT//16))
-        comp.score(str(comp_score), (WIDTH-WIDTH//4-TEXT_SIZE, HEIGHT//16))
+            # AI movement
+            if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-comp.height-2):
+                comp.move(pygame.Vector2(0, 1.5))
+                # print("moving down")
+            if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
+                comp.move(pygame.Vector2(0, -1.5))
+                # print("moving up")
 
 
+            # TODO: Fix ball collision glitch with player and comp
+
+            # Player Block-hit detection
+            if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
+                ball.x_dir *= -1
+                if keys[pygame.K_UP]:
+                    ball.y_dir = -1
+                elif keys[pygame.K_DOWN]:
+                    ball.y_dir = 1
+                hit_sound.play()
+
+            # Comp Block-hit detection
+            if pygame.Rect.colliderect(comp.block_controller, ball.block_controller):
+                ball.x_dir *= -1
+                hit_sound.play()
+
+            # Edge-hit detection
+            if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
+                ball.y_dir *= -1
+
+            if ball.pos[0] >= WIDTH: # right wall detection
+                Default_Positions()
+                time.sleep(1)
+                speed_multiplier = 2
+                player_score += 1
+            elif ball.pos[0] <= 0 - ball.size: # left wall detection
+                Default_Positions()
+                time.sleep(1)
+                speed_multiplier = 2
+                comp_score += 1
+            ball.move(speed_multiplier*1.3)
+
+            # Ball speed ramp
+            speed_multiplier *= 1.0005
+
+            # Update display
+            player.draw()
+            comp.draw()
+            ball.draw()
+
+            player.score(str(player_score), (WIDTH//4, HEIGHT//12))
+            comp.score(str(comp_score), (WIDTH-WIDTH//4, HEIGHT//12))
+
+
+            pygame.display.flip()
+            dt = clock.tick(60)
+        
+        # Display Winner text
+        if player_score > comp_score:
+            result = "Win"
+        else:
+            result = "Lose"
+
+        font = pygame.font.SysFont('arial', TEXT_SIZE * 2)
+        winner_text = font.render(f"You {result}!", True, (255, 255, 255))
+        screen.blit(winner_text, (WIDTH//2 - winner_text.get_width()//2,
+                                    HEIGHT//2 - winner_text.get_height()//2))
         pygame.display.flip()
-        dt = clock.tick(60)
+
+        time.sleep(3)
+        break
 
 if __name__ == "__main__":
     main()
