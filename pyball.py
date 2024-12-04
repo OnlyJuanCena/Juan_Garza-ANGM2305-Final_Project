@@ -5,18 +5,19 @@ import time
 WIDTH = 640
 HEIGHT = 480
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
-
 BLACK = (0,0,0)
+TEXT_SIZE = 36
 
 
 class Block:
 
-    def __init__(self, pos=(0,0)):
+    def __init__(self, pos=(0,0),):
         self.pos = pygame.Vector2(pos)
         self.width = 15
         self.height = 90
         self.color = (255,255,255)
         self.speed = 3.0
+        self.font = pygame.font.SysFont('arial', TEXT_SIZE)
 
         # Rect Controller
         self.block_controller = pygame.Rect(pos[0], pos[1], self.width, self.height)
@@ -30,6 +31,12 @@ class Block:
 
     def draw(self):
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
+
+    def score(self, score_text, pos):
+        score_text = self.font.render(score_text, True, self.color)
+        screen.blit(score_text, pos)
+
+        
 
 class Ball:
     
@@ -64,8 +71,7 @@ def main():
     # Initialize Pygame
     pygame.init()
     clock = pygame.time.Clock()
-    player_score = 0
-    comp_score = 0
+    player_score, comp_score = 0,0
     speed_multiplier = 2
 
     # Set volume
@@ -93,6 +99,7 @@ def main():
         point_sound.play()
 
 
+
     # Game loop to keep the window open
     while True:
         for event in pygame.event.get():
@@ -108,6 +115,14 @@ def main():
             player.move(pygame.Vector2(0, -1.5))
         if keys[pygame.K_DOWN] and player.pos[1] < HEIGHT-player.height-2:
             player.move(pygame.Vector2(0, 1.5))
+
+        # AI movement
+        if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-player.height-2):
+            comp.move(pygame.Vector2(0, 1.5))
+            # print("moving down")
+        if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
+            comp.move(pygame.Vector2(0, -1.5))
+            # print("moving up")
 
         # Player Block-hit detection
         if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
@@ -132,30 +147,25 @@ def main():
             time.sleep(1)
             speed_multiplier = 2
             player_score += 1
-            print(f"Player score: {player_score}")
         elif ball.pos[0] <= 0 - ball.size: # left wall detection
             Default_Positions()
             time.sleep(1)
             speed_multiplier = 2
             comp_score += 1
-            print(f"Comp score: {comp_score}")
         ball.move(speed_multiplier*1.3)
-
-        # AI movement
-        if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-player.height-2):
-            comp.move(pygame.Vector2(0, 1.5))
-            # print("moving down")
-        if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
-            comp.move(pygame.Vector2(0, -1.5))
-            # print("moving up")
 
         # Ball speed ramp
         speed_multiplier *= 1.0005
-            
+
+        # Update display
         player.draw()
         comp.draw()
         ball.draw()
-        # Update display
+
+        player.score(str(player_score), (WIDTH//4, HEIGHT//16))
+        comp.score(str(comp_score), (WIDTH-WIDTH//4-TEXT_SIZE, HEIGHT//16))
+
+
         pygame.display.flip()
         dt = clock.tick(60)
 
