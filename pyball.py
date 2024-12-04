@@ -117,7 +117,7 @@ def main():
             player.move(pygame.Vector2(0, 1.5))
 
         # AI movement
-        if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-player.height-2):
+        if (comp.pos[1] <= ball.pos[1] and comp.pos[1] < HEIGHT-comp.height-2):
             comp.move(pygame.Vector2(0, 1.5))
             # print("moving down")
         if (comp.pos[1] >= ball.pos[1] and comp.pos[1] > 2):
