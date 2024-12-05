@@ -12,5 +12,8 @@ displaying a winner and closing after the first person (or computer) wins three 
 - Increase in game difficulty as time progresses.
 - Sound effects for ball hits and scoring.
 
+## Controls
+- Use the up and down arrow keys to control the player characters.
+
 ## Source Code
 - https://github.com/OnlyJuanCena/Juan_Garza-ANGM2305-Final_Project
