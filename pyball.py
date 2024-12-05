@@ -173,11 +173,13 @@ def main():
             pygame.display.flip()
             dt = clock.tick(60)
         
-        # Display Winner text
+        # Display Win text
         if player_score > comp_score:
             result = "Win"
         else:
             result = "Lose"
+            
+        screen.fill(BLACK)
 
         font = pygame.font.SysFont('arial', TEXT_SIZE * 2)
         winner_text = font.render(f"You {result}!", True, (255, 255, 255))
