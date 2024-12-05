@@ -13,7 +13,7 @@ class Block:
 
     def __init__(self, pos=(0,0),):
         self.pos = pygame.Vector2(pos)
-        self.width = 15
+        self.width = 5
         self.height = 90
         self.color = (255,255,255)
         self.speed = 3.0
@@ -176,8 +176,13 @@ def main():
         # Display Win text
         if player_score > comp_score:
             result = "Win"
+            point_sound.play()
+            time.sleep(0.15)
+            hit_sound.play()
         else:
             result = "Lose"
+            hit_sound.play()
+            point_sound.play()
             
         screen.fill(BLACK)
 
