@@ -4,7 +4,7 @@ import time
 
 WIDTH = 640
 HEIGHT = 480
-screen = pygame.display.set_mode((WIDTH,HEIGHT))
+screen = pygame.display.set_mode((WIDTH,HEIGHT), flags=pygame.FULLSCREEN | pygame.SCALED)
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 TEXT_SIZE = 36
@@ -14,7 +14,7 @@ class Block:
 
     def __init__(self, pos=(0,0),):
         self.pos = pygame.Vector2(pos)
-        self.width = 1
+        self.width = 15
         self.height = 90
         self.color = WHITE
         self.speed = 3.0
@@ -34,7 +34,7 @@ class Block:
         self.block = pygame.draw.rect(screen, self.color, self.block_controller)
 
     def score(self, score_text, pos):
-        score_text = self.font.render(score_text, True, self.color)
+        score_text = self.font.render(score_text, False, self.color)
         screen.blit(score_text, (pos[0]- score_text.get_width()//2, 
                                 pos[1] - score_text.get_height()//2))
 
@@ -104,7 +104,8 @@ def main():
     # Game loop to keep the window open
     while True:
         player_score, comp_score = 0,0
-        while player_score < 3 and comp_score < 3: # Number of rounds before end before winner
+        # Number of rounds before win
+        while player_score < 3 and comp_score < 3:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -145,12 +146,14 @@ def main():
             if ball.pos[1] <= 0 or ball.pos[1] >= HEIGHT - ball.size:
                 ball.y_dir *= -1
 
-            if ball.pos[0] >= WIDTH: # right wall detection
+            # right wall detection
+            if ball.pos[0] >= WIDTH:
                 Default_Positions()
                 time.sleep(1)
                 speed_multiplier = 2
                 player_score += 1
-            elif ball.pos[0] <= 0 - ball.size: # left wall detection
+            # right wall detection
+            elif ball.pos[0] <= 0 - ball.size:
                 Default_Positions()
                 time.sleep(1)
                 speed_multiplier = 2
