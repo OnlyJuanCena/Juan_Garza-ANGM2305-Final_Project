@@ -8,8 +8,8 @@ displaying a winner and closing after the first person (or computer) wins three 
 
 ## Features
 - Classic Pong gameplay with a player vs. computer mode.
-- On-screen score display.
 - Increase in game difficulty as time progresses.
+- In-depth player controls.
 - Sound effects for ball hits and scoring.
 
 ## Controls

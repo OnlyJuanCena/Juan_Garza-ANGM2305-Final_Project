@@ -6,6 +6,7 @@ WIDTH = 640
 HEIGHT = 480
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 BLACK = (0,0,0)
+WHITE = (255,255,255)
 TEXT_SIZE = 36
 
 
@@ -13,9 +14,9 @@ class Block:
 
     def __init__(self, pos=(0,0),):
         self.pos = pygame.Vector2(pos)
-        self.width = 5
+        self.width = 1
         self.height = 90
-        self.color = (255,255,255)
+        self.color = WHITE
         self.speed = 3.0
         self.font = pygame.font.SysFont('arial', TEXT_SIZE)
 
@@ -72,7 +73,6 @@ def main():
     # Initialize Pygame
     pygame.init()
     clock = pygame.time.Clock()
-    player_score, comp_score = 0,0
     speed_multiplier = 2
 
     # Set volume
@@ -103,6 +103,7 @@ def main():
 
     # Game loop to keep the window open
     while True:
+        player_score, comp_score = 0,0
         while player_score < 3 and comp_score < 3: # Number of rounds before end before winner
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -125,8 +126,6 @@ def main():
                 comp.move(pygame.Vector2(0, -1.5))
                 # print("moving up")
 
-
-            # TODO: Fix ball collision glitch with player and comp
 
             # Player Block-hit detection
             if pygame.Rect.colliderect(player.block_controller, ball.block_controller):
@@ -187,13 +186,12 @@ def main():
         screen.fill(BLACK)
 
         font = pygame.font.SysFont('arial', TEXT_SIZE * 2)
-        winner_text = font.render(f"You {result}!", True, (255, 255, 255))
+        winner_text = font.render(f"You {result}!", True, WHITE)
         screen.blit(winner_text, (WIDTH//2 - winner_text.get_width()//2,
                                     HEIGHT//2 - winner_text.get_height()//2))
         pygame.display.flip()
 
         time.sleep(3)
-        break
 
 if __name__ == "__main__":
     main()
