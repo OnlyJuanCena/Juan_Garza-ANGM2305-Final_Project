@@ -159,7 +159,7 @@ def main():
             ball.move(speed_multiplier*1.3)
 
             # Ball speed ramp
-            speed_multiplier *= 1.0005
+            speed_multiplier *= 1.0008
 
             # Update display
             player.draw()
