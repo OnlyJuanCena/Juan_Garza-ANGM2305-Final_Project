@@ -103,7 +103,7 @@ def main():
 
     # Game loop to keep the window open
     while True:
-        while player_score < 3 and comp_score < 3:
+        while player_score < 3 and comp_score < 3: # Number of rounds before end before winner
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
