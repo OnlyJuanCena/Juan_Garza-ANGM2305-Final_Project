@@ -161,10 +161,10 @@ def main():
         # Ball speed ramp
         speed_multiplier *= 1.0005
 
-            # Update display
-            player.draw()
-            comp.draw()
-            ball.draw()
+        # Update display
+        player.draw()
+        comp.draw()
+        ball.draw()
 
         player.score(str(player_score), (WIDTH//4, HEIGHT//16))
         comp.score(str(comp_score), (WIDTH-WIDTH//4-TEXT_SIZE, HEIGHT//16))
